@@ -1,0 +1,23 @@
+# Claude Code internal data
+.claude/
+
+# Old project files (kept locally, not part of this repo)
+vechi/
+
+# Test/scratch artifacts at root
+/*.png
+/*.gif
+
+# Jupyter checkpoints + temp render files
+.ipynb_checkpoints/
+notebooks/tmp.gif
+notebooks/*.gif
+
+# Julia artifacts
+Manifest.toml
+*.cov
+
+# Editor
+.vscode/
+.idea/
+*.swp
