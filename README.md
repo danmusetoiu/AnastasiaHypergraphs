@@ -4,7 +4,7 @@ Material educațional pentru un stagiu de cercetare la **UCD Dublin** (vara 2026
 
 ## Pentru cine e
 
-Studentă/student de chimie cu fundament matematic solid dar **zero experiență de programare**. Predarea pornește de la "ce e o variabilă" și ajunge la *Hypergraph Neural Networks* aplicate la rețele de complexe proteice — în 4 notebook-uri Jupyter executabile.
+Studentă/student de chimie cu fundament matematic solid dar **zero experiență de programare**. Predarea pornește de la "ce e o variabilă" și ajunge la *Hypergraph Neural Networks* + un pipeline ML end-to-end real pentru predicția afinității proteină-ligand — în 5 notebook-uri Jupyter executabile.
 
 ## Conținut
 
@@ -14,8 +14,9 @@ Studentă/student de chimie cu fundament matematic solid dar **zero experiență
 | 02 | [`02_hypergraphs.ipynb`](notebooks/02_hypergraphs.ipynb) | Teoria hypergraphurilor ([Berge 1973], [Ouvrard 2020]). `HyperGraphs.jl` pentru construcție. Rețea de fosforilare ca hypergraph → matrice de stoichiometrie → simulare ODE cu `OrdinaryDiffEq.jl`. |
 | 03 | [`03_ml_intro.ipynb`](notebooks/03_ml_intro.ipynb) | Intro ML: notații matematice Unicode, regresie liniară (Beer-Lambert), gradient descent, rețele neuronale, MLP cu `Flux.jl` + animație live a training-ului. |
 | 04 | [`04_protein_ml.ipynb`](notebooks/04_protein_ml.ipynb) | **Hypergraph Neural Networks** [Feng 2019]: matematica formulei, implementare manuală pe complexe proteice, animație message passing, vizualizare 3D proteine cu `Bio3DView.jl` (CDK2), survey aplicații în proteomică. |
+| 05 | [`05_protein_ligand_affinity.ipynb`](notebooks/05_protein_ligand_affinity.ipynb) | **Pipeline ML end-to-end real**: descărcare [LP-PDBBind](https://github.com/THGLab/LP-PDBBind) [Li 2023] → EDA pe ~19k complexe → featurizare cu `MolecularGraph.jl` → baseline liniar cu `GLM.jl` → MLP cu `Flux.jl` → evaluare (parity, residuals) + vizualizare 3D hit/miss. |
 
-Total: ~190 celule, toate testate end-to-end (vezi `scripts/validate_nb.jl`).
+Total: ~250 celule, toate validate (vezi `scripts/validate_nb.jl`).
 
 ## Quickstart
 
@@ -66,18 +67,19 @@ Browser-ul se deschide automat. Click pe `notebooks/01_julia_basics.ipynb` și p
 ```
 AnastasiaHypergraphs/
 ├── README.md                        ← acest fișier
-├── PLAN.md                          ← plan de proiect detaliat (intern)
-├── notebooks/                       ← cele 4 notebook-uri (rulează în ordine)
+├── notebooks/                       ← cele 5 notebook-uri (rulează în ordine)
 │   ├── 01_julia_basics.ipynb
 │   ├── 02_hypergraphs.ipynb
 │   ├── 03_ml_intro.ipynb
-│   └── 04_protein_ml.ipynb
+│   ├── 04_protein_ml.ipynb
+│   └── 05_protein_ligand_affinity.ipynb
 ├── scripts/                         ← utilități cross-platform
 │   ├── install_ijulia.jl            ← Pkg.add("IJulia")
 │   ├── install_jupyter.jl           ← forțează instalare Jupyter via Conda.jl
 │   ├── check_setup.jl               ← verifică instalare end-to-end
 │   ├── validate_nb.jl <path>        ← validează structura JSON a unui notebook
 │   └── inspect_nb.jl <path>         ← afișează output-urile cheie ale unui notebook
+├── data/                            ← creat automat de nb 05 (LP_PDBBind.csv ~10 MB)
 └── Hypergraphs/                     ← PDF-uri sursă
     ├── 2002.05014v1.pdf             ← Ouvrard 2020 (review teoretic)
     └── btac347_supplementary_data.pdf  ← Diaz & Stumpf 2022 (HyperGraphs.jl)
@@ -88,12 +90,17 @@ AnastasiaHypergraphs/
 | Pachet | Notebook | Folosire |
 |--------|----------|----------|
 | `IJulia` | toate | kernel Jupyter |
-| `Plots` | 01–04 | vizualizări, animații |
+| `Plots`, `StatsPlots` | 01–05 | vizualizări, animații |
 | `HyperGraphs` | 02, 04 | construcție hypergraphuri |
 | `OrdinaryDiffEq` | 02 | simulare ODE |
-| `Flux` | 03 | rețele neuronale + autodiff |
-| `Bio3DView` | 04 | vizualizare 3D proteine (PDB) |
+| `Flux` | 03, 05 | rețele neuronale + autodiff |
+| `Bio3DView` | 04, 05 | vizualizare 3D proteine (PDB) |
 | `LinearAlgebra` (stdlib) | 04 | calcul HGNN manual |
+| `CSV`, `DataFrames` | 05 | citire + manipulare tabel LP-PDBBind |
+| `MolecularGraph` | 05 | parser SMILES + descriptori moleculari |
+| `GLM` | 05 | regresie liniară (baseline) |
+| `StatsBase`, `Statistics` (stdlib) | 05 | statistici descriptive |
+| `Downloads`, `Dates` (stdlib) | 05 | descărcare date + parse timestamp |
 
 ## Referințe-cheie
 
@@ -106,6 +113,8 @@ Toate notebook-urile au secțiuni `Referințe` complete. Esențiale:
 - **Feng et al. 2019** — *Hypergraph Neural Networks*. [arXiv:1809.09401](https://arxiv.org/abs/1809.09401)
 - **Kipf & Welling 2017** — *Semi-Supervised Classification with GCN*. [arXiv:1609.02907](https://arxiv.org/abs/1609.02907)
 - **Jumper et al. 2021** — *AlphaFold*. [DOI](https://doi.org/10.1038/s41586-021-03819-2)
+- **Li et al. 2023** — *Leak Proof PDBBind*. [arXiv:2308.09639](https://arxiv.org/abs/2308.09639)
+- **Lipinski et al. 2001** — *Rule of 5 pentru drug-likeness*. [DOI](https://doi.org/10.1016/S0169-409X(00)00129-0)
 
 ## Context
 

@@ -17,6 +17,9 @@ notebooks/*.gif
 Manifest.toml
 *.cov
 
+# Downloaded datasets (reproducible via nb 05)
+data/
+
 # Editor
 .vscode/
 .idea/
